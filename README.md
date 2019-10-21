@@ -1,11 +1,11 @@
 # ukclimate - Use public Met Office datasets for fun
 
 What works [mostly]:
-    * Parse a given file into a general representation of historic data and regional time-ordered series
-    * Download and cache files from the Met Office
+  * Parse a given file into a general representation of historic data and regional time-ordered series
+  * Download and cache files from the Met Office
  
 What doesn't work [yet]:
-    * Parsing regional sets that are rank-ordered rather than time-ordered (it's very similar data)
+  * Parsing regional sets that are rank-ordered rather than time-ordered (it's very similar data)
 
 21 October, 2019: Parser works for most of the datasets, it's clear where they fail. Please help if you can! The parser is fast and it won't parse a given file if it's already parsed. However, caching of the results doesn't really work in the same way that we've cached downloaded files. I don't think there's much point implementing it in the same way because it doesn't provide much work anyway. I don't have the time to write a better cachingmechanism. What works:
 
