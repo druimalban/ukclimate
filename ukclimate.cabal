@@ -1,0 +1,76 @@
+name:                ukclimate
+version:             0.1.0.0
+synopsis:            Use Met Office public datasets for fun.
+description:         Use Met Office public datasets for fun.
+                     
+                     The Met Office provides a number of datasets for public benefit. These largely relate to a number of historical measurements at various sites around the UK.
+                     I wanted to use this data, but because it is largely not provided in a format I could easily process, like CSV, this became difficult, and I had to manually parse it.
+
+                     The library and sample client is able to serialise most if not all examples of historical station data in JSON and CSV available from the Met Office, at the time of writing.
+
+                     Needless to say, this is a work in progress.
+                     I’m mostly writing this as a learning exercise for Haskell, particularly with regards to parser combinators,
+                     as well as using the wonderful recursion-schemes library and lenses.
+homepage:            https://github.com/duncanguthrie/ukclimate#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Duncan Guthrie
+maintainer:          dguthrie@posteo.net
+copyright:           Duncan Guthrie
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README.md, contrib/sites.json
+
+executable ukclimate-client
+  hs-source-dirs:    src
+  default-language:  Haskell2010
+  main-is:           Client.hs
+  other-modules:     Cal, CSV, Entries, Parse, Report, Sync, TH, Types, VectorF
+  build-depends:     aeson >= 1.4.2.0 && < 1.5.0,
+                     attoparsec >= 0.13.2.2 && < 0.14,
+                     base >= 4.7 && < 5,
+                     bytestring >= 0.10.8.2 && < 0.10.9,
+                     cassava >= 0.5.1.0 && < 0.6,
+                     digits >= 0.3.1 && < 0.4,
+                     directory >= 1.3.3.0 && < 1.3.4,
+                     free >= 5.1.1 && < 5.2,
+                     http-client >= 0.5.14 && < 0.6,
+                     http-client-tls >= 0.3.5.3 && < 0.4,
+                     lens >= 4.17.1 && < 4.18,
+                     optparse-applicative >= 0.14.3.0 && < 0.15,
+                     pureMD5 >= 2.1.3 && < 2.2,
+                     recursion-schemes >= 5.1 && < 5.2,
+                     split >= 0.2.3.3 && < 0.3,
+                     statistics >= 0.15.0.0 && < 0.16,
+                     template-haskell >= 2.14.0.0 && < 2.15,
+                     text >= 1.2.3.1 && < 1.3,
+                     time >= 1.8.0.2 && < 1.9,
+                     tuple >= 0.3.0.2 && < 0.4,
+                     vector >= 0.12.0.3 && < 0.13
+                                          
+library
+  hs-source-dirs:    src
+  default-language:  Haskell2010
+  other-modules:     Cal, CSV, Entries, Parse, Report, Sync, TH, Types, VectorF
+  build-depends:     aeson >= 1.4.2.0 && < 1.5.0,
+                     asn1-encoding >= 0.9.5 && < 0.10,
+                     attoparsec >= 0.13.2.2 && < 0.14,
+                     base >= 4.7 && < 5,
+                     bytestring >= 0.10.8.2 && < 0.10.9,
+                     cassava >= 0.5.1.0 && < 0.6,
+                     digits >= 0.3.1 && < 0.4,
+                     directory >= 1.3.3.0 && < 1.3.4,
+                     free >= 5.1.1 && < 5.2,
+                     http-client >= 0.5.14 && < 0.6,
+                     http-client-tls >= 0.3.5.3 && < 0.4,
+                     lens >= 4.17.1 && < 4.18,
+                     pureMD5 >= 2.1.3 && < 2.2,
+                     recursion-schemes >= 5.1 && < 5.2,
+                     split >= 0.2.3.3 && < 0.3,
+                     statistics >= 0.15.0.0 && < 0.16,
+                     template-haskell >= 2.14.0.0 && < 2.15,
+                     text >= 1.2.3.1 && < 1.3,
+                     time >= 1.8.0.2 && < 1.9,
+                     tuple >= 0.3.0.2 && < 0.4,
+                     vector >= 0.12.0.3 && < 0.13
