@@ -9,6 +9,8 @@ What doesn't work [yet]:
 
 21 October, 2019: Parser works for most of the datasets, it's clear where they fail. Please help if you can! The parser is fast and it won't parse a given file if it's already parsed. However, caching of the results doesn't really work in the same way that we've cached downloaded files. I don't think there's much point implementing it in the same way because it doesn't provide much work anyway. I don't have the time to write a better cachingmechanism. What works:
 
+Note: make sure `~/.ukclimate/data` is a real directory with sites.json in it. You can make a symbolic link to the path of `contrib` in the source directory for instance.
+
 -----
 
 The Met Office provides a number of datasets for public benefit. These largely relate to a number of historical measurements at various sites around the UK.
