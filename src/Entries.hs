@@ -163,7 +163,7 @@ makeLensesWith myRules ''RegionalEntry
 data Report = Report {
     fetchFails  :: Vector HttpException                     -- URL and how it failed
   , fetchSuccs  :: Vector (IntermediateFile, Target)
-  , cacheFails  :: Vector (IOException)                     -- Files fetched which failed to write
+  , cacheFails  :: Vector (Maybe IOException, Maybe IOException)                     -- Files fetched which failed to write
   , cacheSuccs  :: Vector (ByteString, Target)
   , decodeFails :: Vector UnicodeException                  -- Files decodes which failed
   , decodeSuccs :: Vector (Text, Target)

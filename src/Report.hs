@@ -8,11 +8,13 @@
 module Report where
 
 import Control.Exception (Exception)
+import Control.Lens (_1, over, view, traverse)
 import Data.Aeson (FromJSON, ToJSON, decodeFileStrict)
 import Data.ByteString.Lazy (ByteString)
 import Data.Either (fromLeft, fromRight, isLeft, isRight)
 import Data.Either hiding (lefts, rights)
 import Data.Functor.Foldable
+import Data.Maybe (fromJust, isJust, isNothing)
 import Data.Text (Text)
 import Data.Digest.Pure.MD5 (MD5Digest)
 import Data.Vector (Vector, cons, empty, filter, foldr, length, map)
@@ -49,11 +51,13 @@ runReport targetsF rawFilesDir outFilesDir = do
       let fetchFails  = lefts ft
       let fetchSuccs  = rights ft
 
+      -- cacheCandidates :: Vector (IntermediateFile, Target) -> IO (Vector (Either (Maybe IOException, Maybe IOException) (ByteString, Target)))
       cached <- cacheCandidates fetchSuccs
+      --let cacheFails  = lefts cached
+      --let cacheSuccs  = rights cached
       let cacheFails  = lefts cached
-      let cacheSuccs  = rights cached
-      
-      let decoded     = decodeCandidates cacheSuccs
+      let cacheSuccs  = rights cached 
+      let decoded     = decodeCandidates cacheSuccs 
       let decodeFails = lefts decoded
       let decodeSuccs = rights decoded
 
