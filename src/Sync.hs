@@ -40,7 +40,7 @@ import Network.HTTP.Client
 import Network.HTTP.Client.TLS
 import Prelude hiding (filterM, foldr, map, mapM, readFile, writeFile)
 import Text.Read (readMaybe)
-import System.Directory (createDirectoryIfMissing, doesPathExist, doesFileExist)
+import System.Directory (createDirectoryIfMissing, createFileLink, doesPathExist, doesFileExist)
 
 import CSV
 import Parse
@@ -81,12 +81,12 @@ fetchTargets targets rawFilesDir = do
 
 -- IntermediateFile :: (ByteString, (FilePath, FilePath))
 getChangedFiles :: Vector (IntermediateFile, Target) -> IO (Vector (IntermediateFile, Target))
-getChangedFiles = filterM hasChanged
+getChangedFiles = filterM hasChanged where
   -- 1. We take MD5 sums of the downloaded bytestrings held in each IntermediateFile
   -- 2. We take MD5 sums of the LAST result, that is those in ~/.ukclimate/data/raw/$FILE
   -- 3. If differing, we produce canditate files to be parsed.
-hasChanged :: (IntermediateFile, Target) -> IO Bool
-hasChanged ((bs, (newFP, origFP)), target) = do
+  hasChanged :: (IntermediateFile, Target) -> IO Bool
+  hasChanged ((bs, (newFP, origFP)), target) = do
     let newMD5 = md5 bs
     origExists <- doesFileExist origFP 
     if (not origExists) then return True else do
@@ -97,8 +97,8 @@ cacheCandidates :: Vector (IntermediateFile, Target) -> IO (Vector (Either (Mayb
 cacheCandidates v = getChangedFiles v >>= mapM cc where
   cc :: (IntermediateFile, Target) -> IO (Either (Maybe IOException, Maybe IOException) (ByteString, Target))
   cc ((b, (currFP, resFP)), target) = do
-    curr <- try (writeFile currFP b) :: IO (Either IOException ())
-    res  <- try (writeFile resFP  b) :: IO (Either IOException ())
+    curr <- try (writeFile currFP b)          :: IO (Either IOException ())
+    res  <- try (createFileLink currFP resFP) :: IO (Either IOException ())
     case (curr, res) of
       --(Left e, _) -> return Nothing
       --(_, Left e) -> return Nothing
